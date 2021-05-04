@@ -1,0 +1,1 @@
+cinst -y visualstudio2019enterprise --package-parameters="'--config 2019.vsconfig'"
