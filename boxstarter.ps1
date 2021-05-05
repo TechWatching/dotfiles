@@ -1,42 +1,39 @@
 Disable-UAC
+$Boxstarter.AutoLogin=$false
+# Install git and clone repository containing scripts and config files
+# TODO: see how to improve install that by using chezmoi (cinst -y chezmoi)
+cinst -y git --params "/GitOnlyOnPath /NoShellIntegration /WindowsTerminal"
+RefreshEnv
+git clone https://github.com/TechWatching/dotfiles.git "$env:USERPROFILE\dotfiles"
+# Git configuration
+Remove-Item -Path "$env:USERPROFILE\.gitconfig" -Force
+New-Item -ItemType SymbolicLink -Path "$env:USERPROFILE\.gitconfig" -Target "$env:USERPROFILE\dotfiles\config\git\.gitconfig"
+# TODO: configure git signature
 
-# Get the base URI path from the ScriptToCall value
-$bstrappackage = "-bootstrapPackage"
-$helperUri = $Boxstarter['ScriptToCall']
-$strpos = $helperUri.IndexOf($bstrappackage)
-$helperUri = $helperUri.Substring($strpos + $bstrappackage.Length)
-$helperUri = $helperUri.TrimStart("'", " ")
-$helperUri = $helperUri.TrimEnd("'", " ")
-$helperUri = $helperUri.Substring(0, $helperUri.LastIndexOf("/"))
-$helperUri += "/scripts"
-write-host "helper script base URI is $helperUri"
+# Winget configuration
+Remove-Item -Path "$env:USERPROFILE\AppData\Local\Packages\Microsoft.DesktopAppInstaller_8wekyb3d8bbwe\LocalState\settings.json" -Force
+New-Item -ItemType SymbolicLink -Path "$env:USERPROFILE\AppData\Local\Packages\Microsoft.DesktopAppInstaller_8wekyb3d8bbwe\LocalState\settings.json" -Target "$env:USERPROFILE\dotfiles\config\winget\settings.json"
 
-function executeScript {
-    Param ([string]$script)
-    write-host "executing $helperUri/$script ..."
-	iex ((new-object net.webclient).DownloadString("$helperUri/$script"))
-}
+#--- Enable developer mode on the system ---
+Set-ItemProperty -Path HKLM:\Software\Microsoft\Windows\CurrentVersion\AppModelUnlock -Name AllowDevelopmentWithoutDevLicense -Value 1
 
 #--- Setting up Windows ---
-executeScript "FileExplorerSettings.ps1";
-executeScript "RemoveDefaultApps.ps1";
-executeScript "Browsers.ps1"
+. "$env:USERPROFILE\dotfiles\scripts\FileExplorerSettings.ps1"
+. "$env:USERPROFILE\dotfiles\scripts\RemoveDefaultApps.ps1"
+# . "$env:USERPROFILE\dotfiles\scripts\IDEs.ps1"
+. "$env:USERPROFILE\dotfiles\scripts\Tools.ps1"
 
-# // git / signature
-# // windowsfeatures
-# // powershell / posh git / ...
+# TODO: install WSL2 / Ubuntu
+# cinst -y Microsoft-Windows-Subsystem-Linux -source windowsfeatures
+# cinst -y VirtualMachinePlatform -source windowsfeatures
+# wsl --set-default-version 2
+# choco install wsl2 --params "/Version:2 /Retry:true"
+
+# TODO: Docker
+
+# // windowsfeatures (Windows Sandbox, .NET Framework)
 # // nushell / starship
-# // vscode
-# // Windows Terminal / Cascadia Code PL / settings
-# // WSL2 / Ubuntu
-# // Docker
-# // nodejs-lts / nvm
-# // Taskbar
-# power toys
-
-
-# executeScript "CommonDevTools.ps1";
-# executeScript "SystemConfiguration.ps1";
+# // Taskbar (Set-BoxstarterTaskbarOptions)
 
 #--- reenabling critial items ---
 Enable-UAC

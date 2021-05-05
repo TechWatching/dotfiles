@@ -1,0 +1,34 @@
+[user]
+	name = Alexandre Nedelec
+[fetch]
+	prune = true
+[pull]
+	rebase = true
+[diff]     
+	tool = vsdiffmerge
+[difftool "default-difftool"]
+	cmd = code --wait --diff $LOCAL $REMOTE
+[core]
+	editor = code --wait
+[difftool]
+	prompt = true
+[difftool "vsdiffmerge"]
+	cmd = \"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Enterprise\\Common7\\IDE\\CommonExtensions\\Microsoft\\TeamFoundation\\Team Explorer\\vsdiffmerge.exe\" \"$LOCAL\" \"$REMOTE\" //t
+	keepBackup = false
+[remote "origin"]
+	fetch = +refs/pull/*/merge:refs/remotes/origin/pr/*
+[winUpdater]
+	recentlySeenVersion = 2.20.1.windows.1
+[credential]
+	helper = manager
+[alias]
+	lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+	bcl = !nu $HOME\"\\dotfiles\\config\\nu\\gitalias_bcl.nu\"
+[rebase]
+	autostash = true
+[push]
+	default = current
+[submodule]
+	recurse = true
+[init]
+	defaultBranch = main
