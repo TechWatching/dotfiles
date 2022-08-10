@@ -1,16 +1,8 @@
 {
+    "$help": "https://aka.ms/terminal-documentation",
     "$schema": "https://aka.ms/terminal-profiles-schema",
-    "copyFormatting": "none",
-    "copyOnSelect": true,
-    "defaultProfile": "{574e775e-4f2a-5b96-ac1e-a2962a402336}",
-    // Add custom keybindings to this array.
-    // To unbind a key combination from your defaults.json, set the command to "unbound".
-    // To learn more about keybindings, visit https://aka.ms/terminal-keybindings
-    "keybindings": 
+    "actions": 
     [
-        // Copy and paste are bound to Ctrl+Shift+C and Ctrl+Shift+V in your defaults.json.
-        // These two lines additionally bind them to Ctrl+C and Ctrl+V.
-        // To learn more about selection, visit https://aka.ms/terminal-selection
         {
             "command": 
             {
@@ -23,15 +15,14 @@
             "command": "paste",
             "keys": "ctrl+v"
         },
-        // Press Ctrl+Shift+F to open the search box
         {
             "command": "find",
             "keys": "ctrl+shift+f"
         },
-        // Press Alt+Shift+D to open a new pane.
-        // - "split": "auto" makes this pane open in the direction that provides the most surface area.
-        // - "splitMode": "duplicate" makes the new pane use the focused pane's profile.
-        // To learn more about panes, visit https://aka.ms/terminal-panes
+        {
+            "command": "closeWindow",
+            "keys": "alt+f4"
+        },
         {
             "command": 
             {
@@ -42,50 +33,39 @@
             "keys": "alt+shift+d"
         },
         {
-            "command": "closeWindow",
-            "keys": "alt+f4"
-        },
-        {
             "command": 
             {
                 "action": "openSettings",
                 "target": "settingsUI"
             },
-            "keys": "ctrl+shift+,"
+            "keys": "ctrl+shift+comma"
         }
     ],
+    "copyFormatting": "none",
+    "copyOnSelect": true,
+    "defaultProfile": "{574e775e-4f2a-5b96-ac1e-a2962a402336}",
     "launchMode": "maximized",
     "profiles": 
     {
         "defaults": 
         {
-            "fontFace": "Cascadia Code PL"
+            "font": 
+            {
+                "face": "CaskaydiaCove Nerd Font"
+            }
         },
         "list": 
         [
             {
-                "commandline": "powershell.exe",
                 "guid": "{61c54bbd-c2c6-5271-96e7-009a87ff44bf}",
                 "hidden": true,
                 "name": "Windows PowerShell"
             },
             {
-                "commandline": "cmd.exe",
                 "guid": "{0caa0dad-35be-5f56-a8ff-afceeeaa6101}",
                 "hidden": true,
                 "name": "Invite de commandes",
                 "tabTitle": "cmd"
-            },
-            {
-                "backgroundImage": "ms-appdata:///roaming/OS_Ubuntu.png",
-                "backgroundImageOpacity": 0.30000001192092896,
-                "backgroundImageStretchMode": "none",
-                "fontFace": "Droid Sans Mono Awesome",
-                "guid": "{2c4de342-38b7-51cf-b940-2309a097f518}",
-                "hidden": false,
-                "name": "Ubuntu",
-                "source": "Windows.Terminal.Wsl",
-                "tabTitle": "Ubuntu"
             },
             {
                 "backgroundImage": "ms-appdata:///roaming/Azure.png",
@@ -98,42 +78,49 @@
                 "source": "Windows.Terminal.Azure"
             },
             {
-                "acrylicOpacity": 0.85000002384185791,
-                "backgroundImage": "ms-appdata:///roaming/vs-logo.png",
-                "backgroundImageOpacity": 0.30000001192092896,
-                "backgroundImageStretchMode": "none",
-                "closeOnExit": "never",
-                "colorScheme": "Campbell",
-                "commandline": "cmd.exe /K\"C:\\PROGRA~2\\MICROS~1\\2019\\Enterprise\\Common7\\Tools\\VsDevCmd.bat\"",
-                "cursorColor": "#00FF00",
-                "cursorHeight": 25,
-                "cursorShape": "vintage",
-                "fontFace": "Fira Code",
-                "fontSize": 10,
-                "guid": "{39285a8e-036c-446f-8a9c-78994e34bf85}",
-                "hidden": false,
-                "historySize": 9001,
-                "icon": "ms-appdata:///roaming/vs.png",
-                "name": "VS2019 Powershell",
-                "padding": "0, 0, 0, 0",
-                "snapOnInput": true,
-                "tabTitle": "VS2019 Powershell",
-                "useAcrylic": true
-            },
-            {
-                "commandline": "nu.exe",
-                "guid": "{2b372ca1-1ee2-403d-a839-6d63077ad871}",
-                "hidden": false,
-                "name": "Nu Shell",
-                "startingDirectory": "."
-            },
-            {
                 "colorScheme": "Cobalt2",
                 "guid": "{574e775e-4f2a-5b96-ac1e-a2962a402336}",
                 "hidden": false,
                 "name": "PowerShell",
                 "source": "Windows.Terminal.PowershellCore",
                 "startingDirectory": "d:/dev/"
+            },
+            {
+                "guid": "{0a0d8adc-ee68-5194-b714-cec1c25823fd}",
+                "hidden": true,
+                "name": "Developer Command Prompt for VS 2022",
+                "source": "Windows.Terminal.VisualStudio"
+            },
+            {
+                "guid": "{05dbdb89-20c2-5350-a1c0-573fc9566cf4}",
+                "hidden": false,
+                "icon": "ms-appdata:///roaming/vs.png",
+                "name": "Developer PowerShell for VS 2022",
+                "source": "Windows.Terminal.VisualStudio"
+            },
+            {
+                "commandline": "C:\\Program Files\\Git\\git-bash.exe",
+                "guid": "{4b20e41e-333e-4350-b128-be08a892e63d}",
+                "hidden": true,
+                "name": "Bash"
+            },
+            {
+                "guid": "{1cd79813-5972-56cb-badb-ba5ee12693c5}",
+                "hidden": true,
+                "name": "rancher-desktop",
+                "source": "Windows.Terminal.Wsl"
+            },
+            {
+                "guid": "{1bdae7ec-8ca6-5caa-8453-8b6fe78b2748}",
+                "hidden": true,
+                "name": "rancher-desktop-data",
+                "source": "Windows.Terminal.Wsl"
+            },
+            {
+                "guid": "{aab79973-318f-43b6-a9bc-b4096493753f}",
+                "hidden": false,
+                "name": "Nushell",
+                "source": "nu"
             }
         ]
     },
