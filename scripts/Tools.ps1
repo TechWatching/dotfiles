@@ -1,29 +1,58 @@
-# browsers
+# ---------------------------------------------- #
+# Browsers  ------------------------------------ #
+# ---------------------------------------------- #
 cinst -y googlechrome
 cinst -y firefox
 
-# common tools
+# ---------------------------------------------- #
+# Common tools  --------------------------------- #
+# ---------------------------------------------- #
 cinst -y 7zip
 cinst -y paint.net
 cinst -y screentogif
-cinst -y windirstat
 cinst -y zoomit
-cinst -y pandoc
+winget install -e -h --id WinDirStat.WinDirStat
+winget install -e -h --id Microsoft.BingWallpaper
+winget install -e -h --id Obsidian.Obsidian
+winget install -e -h --id JohnMacFarlane.Pandoc
 winget install -e -h --id Microsoft.Whiteboard -s msstore
-winget install -e -h --id Microsoft.Teams
-winget install -e -h --id Microsoft.Office
 winget install -e -h --id Microsoft.PowerToys
+# Already  installed by default
+# winget install -e -h --id Microsoft.Teams
+# winget install -e -h --id Microsoft.Office
+winget install -e -h --id Logitech.Options
+winget install -e -h --id Dell.DisplayManager
 
-# dev tools
-cinst -y repoz
+# ---------------------------------------------- #
+# Dev tools  ----------------------------------- #
+# ---------------------------------------------- #
+winget install -e -h --id AndreasWascher.RepoZ
+winget install -e -h --id CoreyButler.NVMforWindows
 # iwr -useb get.scoop.sh | iex
-# Powershell install
+
+
+# ---------------------------------------------- #
+# PowerShell  ---------------------------------- #
+# ---------------------------------------------- #
 winget install -e -h --id Microsoft.PowerShell
 # Set-ExecutionPolicy RemoteSigned -Scope CurrentUser
 Install-Module posh-git -Scope CurrentUser -Force
 Install-Module oh-my-posh -Scope CurrentUser -Force
 Install-Module posh-git
 Install-Module oh-my-posh
+
+# ---------------------------------------------- #
+# NuShell  ---------------------------------- #
+# ---------------------------------------------- #
+winget install -e -h --id Nushell.Nushell
+Remove-Item -Path "$env:USERPROFILE\AppData\Local\Roaming\nushell\config.nu" -Force
+New-Item -ItemType SymbolicLink -Path "$env:USERPROFILE\AppData\Local\Roaming\nushell\config.nu" -Target "$env:USERPROFILE\dotfiles\config\nu\config.nu"
+# config auto complete dotnet / nuke / ...
+# configure prompt with starship or ohmyposh
+
+# ---------------------------------------------- #
+# Windows Terminal ----------------------------- #
+# ---------------------------------------------- #
 # Windows Terminal (stable + preview) install with Cascadia Code PL font
 winget install -e -h --id Microsoft.WindowsTerminal -s msstore
 winget install -e -h --id Microsoft.WindowsTerminalPreview -s msstore
@@ -37,16 +66,22 @@ Remove-Item -Path "$env:USERPROFILE\AppData\Local\Packages\Microsoft.WindowsTerm
 New-Item -ItemType SymbolicLink -Path "$env:USERPROFILE\AppData\Local\Packages\Microsoft.WindowsTerminalPreview_8wekyb3d8bbwe\LocalState\settings.json" -Target "$env:USERPROFILE\dotfiles\config\windowsTerminal\settings.json"
 cp "$env:USERPROFILE\dotfiles\config\windowsTerminal\icons\*" "$env:USERPROFILE\AppData\Local\Packages\Microsoft.WindowsTerminalPreview_8wekyb3d8bbwe\RoamingState\"
 
-# # azure tools 
+# ---------------------------------------------- #
+# Azure tools  --------------------------------- #
+# ---------------------------------------------- #
 winget install -e -h --id Microsoft.AzureCLI
 winget install -e -h --id Microsoft.AzureCosmosEmulator
 winget install -e -h --id Microsoft.AzureDataStudio
 winget install -e -h --id Microsoft.azure-iot-explorer
 winget install -e -h --id Microsoft.AzureStorageExplorer
-cinst -y pulumi
-# TODO : install azurite as well
+winget install -e -h --id Pulumi.Pulumi
+winget install -e -h --id Microsoft.AzureFunctionsCoreTools
+# Azurite will be installed through vsocde extension
 
-# # blogs
+
+# ---------------------------------------------- #
+# Blog tools  ---------------------------------- #
+# ---------------------------------------------- #
 # wyam
 # netlify
 # statiq

@@ -30,9 +30,9 @@ Set-ItemProperty -Path HKLM:\Software\Microsoft\Windows\CurrentVersion\AppModelU
 # choco install wsl2 --params "/Version:2 /Retry:true"
 
 # TODO: Docker
+# winget install -e -h --id suse.RancherDesktop
 
 # // windowsfeatures (Windows Sandbox, .NET Framework)
-# // nushell / starship
 # // Taskbar (Set-BoxstarterTaskbarOptions)
 
 #--- reenabling critial items ---
