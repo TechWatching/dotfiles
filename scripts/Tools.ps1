@@ -45,8 +45,8 @@ Install-Module oh-my-posh
 # NuShell  ---------------------------------- #
 # ---------------------------------------------- #
 winget install -e -h --id Nushell.Nushell
-Remove-Item -Path "$env:USERPROFILE\AppData\Local\Roaming\nushell\config.nu" -Force
-New-Item -ItemType SymbolicLink -Path "$env:USERPROFILE\AppData\Local\Roaming\nushell\config.nu" -Target "$env:USERPROFILE\dotfiles\config\nu\config.nu"
+Remove-Item -Path "$env:USERPROFILE\AppData\Roaming\nushell\config.nu" -Force
+New-Item -ItemType SymbolicLink -Path "$env:USERPROFILE\AppData\Roaming\nushell\config.nu" -Target "$env:USERPROFILE\dotfiles\config\nu\config.nu"
 # config auto complete dotnet / nuke / ...
 # configure prompt with starship or ohmyposh
 
