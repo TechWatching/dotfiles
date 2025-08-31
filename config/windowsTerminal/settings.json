@@ -4,6 +4,10 @@
     "actions": 
     [
         {
+            "command": "find",
+            "id": "User.find"
+        },
+        {
             "command": 
             {
                 "action": "splitPane",
@@ -13,8 +17,8 @@
             "id": "User.splitPane.A6751878"
         },
         {
-            "command": "find",
-            "id": "User.find"
+            "command": "paste",
+            "id": "User.paste"
         },
         {
             "command": 
@@ -25,20 +29,16 @@
             "id": "User.openSettings.6CD791B"
         },
         {
-            "command": "paste",
-            "id": "User.paste"
-        },
-        {
-            "command": "closeWindow",
-            "id": "User.closeWindow"
-        },
-        {
             "command": 
             {
                 "action": "copy",
                 "singleLine": false
             },
             "id": "User.copy.644BA8F2"
+        },
+        {
+            "command": "closeWindow",
+            "id": "User.closeWindow"
         }
     ],
     "copyFormatting": "none",
@@ -47,12 +47,12 @@
     "keybindings": 
     [
         {
-            "id": "User.paste",
-            "keys": "ctrl+v"
-        },
-        {
             "id": "User.find",
             "keys": "ctrl+shift+f"
+        },
+        {
+            "id": "User.paste",
+            "keys": "ctrl+v"
         },
         {
             "id": "User.splitPane.A6751878",
@@ -71,6 +71,7 @@
             "keys": "ctrl+shift+comma"
         }
     ],
+    "language": "en-US",
     "launchMode": "maximized",
     "newTabMenu": 
     [
@@ -119,7 +120,7 @@
                 "hidden": false,
                 "name": "PowerShell",
                 "source": "Windows.Terminal.PowershellCore",
-                "startingDirectory": "c:/dev/"
+                "startingDirectory": "d:/dev/"
             },
             {
                 "commandline": "C:\\Program Files\\Git\\git-bash.exe",
@@ -135,7 +136,7 @@
                 "hidden": false,
                 "icon": "C:\\Program Files\\nu\\nu.ico",
                 "name": "Nushell",
-                "startingDirectory": "c:/dev/"
+                "startingDirectory": "d:/dev/"
             },
             {
                 "guid": "{16208362-94fc-5b1f-a491-5b2624d5ab56}",
@@ -151,7 +152,7 @@
                 "hidden": true,
                 "icon": "ms-appx:///ProfileIcons/pwsh.png",
                 "name": "PowerShell Admin",
-                "startingDirectory": "c:/dev/"
+                "startingDirectory": "d:/dev/"
             },
             {
                 "guid": "{8ab8e6f6-35c6-5b46-8419-3e1568105476}",
@@ -176,6 +177,12 @@
                 "hidden": true,
                 "name": "Nushell",
                 "source": "nu"
+            },
+            {
+                "guid": "{51855cb2-8cce-5362-8f54-464b92b32386}",
+                "hidden": false,
+                "name": "Ubuntu",
+                "source": "CanonicalGroupLimited.Ubuntu_79rhkp1fndgsc"
             }
         ]
     },
@@ -183,7 +190,7 @@
     [
         {
             "background": "#193549",
-            "black": "#000000",
+            "black": "#193549",
             "blue": "#1478DB",
             "brightBlack": "#808080",
             "brightBlue": "#1478DB",
@@ -251,6 +258,5 @@
             "yellow": "#C4A000"
         }
     ],
-    "startOnUserLogin": true,
     "themes": []
 }
