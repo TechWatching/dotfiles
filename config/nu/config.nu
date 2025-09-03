@@ -33,6 +33,7 @@ source ~/.oh-my-posh.nu
 
 # Completions
 source ~/.cache/carapace/init.nu
+source ~/.zoxide.nu
 
 # Custom aliases
 use C:\tools\nu_scripts\aliases\git\git-aliases.nu *

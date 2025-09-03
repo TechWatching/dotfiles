@@ -32,15 +32,15 @@ iwr https://get.pnpm.io/install.ps1 -useb | iex
 winget install -e -h --id GitHub.cli
 
 # ---------------------------------------------- #
-# Prompt  -------------------------------------- #
+# Terminal Prompt, Completions, CD  ------------ #
 # ---------------------------------------------- #
 pwsh -Command { Install-Module posh-git -Scope CurrentUser -Force}
 winget install -e -h --id JanDeDobbeleer.OhMyPosh
 
-# ---------------------------------------------- #
-# Terminal completions ------------------------- #
-# ---------------------------------------------- #
 winget install -e --id rsteube.Carapace
+
+winget install fzf
+winget install -e --id ajeetdsouza.zoxide
 
 # ---------------------------------------------- #
 # PowerShell  ---------------------------------- #
