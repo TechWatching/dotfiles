@@ -30,7 +30,7 @@ winget install -e -h --id AndreasWascher.RepoZ
 winget install -e -h --id CoreyButler.NVMforWindows
 iwr https://get.pnpm.io/install.ps1 -useb | iex
 # iwr -useb get.scoop.sh | iex
-
+winget install -e -h --id GitHub.cli
 
 # ---------------------------------------------- #
 # Prompt  -------------------------------------- #

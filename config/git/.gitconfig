@@ -5,26 +5,29 @@
 [pull]
 	rebase = true
 [rebase]
-	autostash = true
-[diff]     
-	tool = vsdiffmerge
-[difftool "default-difftool"]
+	autoStash = true
+	autosquash = true
+[diff]
+  tool = vscode
+[difftool "vscode"]
 	cmd = code --wait --diff $LOCAL $REMOTE
+[mergetool "vscode"]
+  cmd = code --wait $MERGED
 [core]
 	editor = code --wait
 	autocrlf = true
-[difftool]
-	prompt = true
 [remote "origin"]
 	fetch = +refs/pull/*/merge:refs/remotes/origin/pr/*
 [winUpdater]
-	recentlySeenVersion = 2.20.1.windows.1
+	recentlySeenVersion = 2.40.1.windows.1
 [credential]
-	helper = manager-core
+	helper = manager
 [alias]
 	lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
 	bcl = !nu $HOME\"\\dotfiles\\config\\nu\\gitalias_bcl.nu\"
 	pf = push origin --force-with-lease
+	new = lg main..HEAD
+	missing = lg HEAD..main
 [push]
 	autoSetupRemote = true
 [submodule]

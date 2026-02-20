@@ -1,8 +1,13 @@
 {
     "$help": "https://aka.ms/terminal-documentation",
-    "$schema": "https://aka.ms/terminal-profiles-schema",
+    "$schema": "https://raw.githubusercontent.com/microsoft/terminal/release-1.18/doc/cascadia/profiles.schema.json",
+    // "$schema": "https://aka.ms/terminal-profiles-schema",
     "actions": 
     [
+        {
+            "command": "find",
+            "keys": "ctrl+shift+f"
+        },
         {
             "command": "paste",
             "keys": "ctrl+v"
@@ -16,20 +21,8 @@
             "keys": "ctrl+c"
         },
         {
-            "command": "find",
-            "keys": "ctrl+shift+f"
-        },
-        {
             "command": "closeWindow",
             "keys": "alt+f4"
-        },
-        {
-            "command": 
-            {
-                "action": "openSettings",
-                "target": "settingsUI"
-            },
-            "keys": "ctrl+shift+comma"
         },
         {
             "command": 
@@ -39,6 +32,14 @@
                 "splitMode": "duplicate"
             },
             "keys": "alt+shift+d"
+        },
+        {
+            "command": 
+            {
+                "action": "openSettings",
+                "target": "settingsUI"
+            },
+            "keys": "ctrl+shift+comma"
         }
     ],
     "copyFormatting": "none",
@@ -49,6 +50,18 @@
     {
         "defaults": 
         {
+            // Marks in general
+            "experimental.showMarksOnScrollbar": true,
+            
+            // Needed for both pwsh and CMD shell integration
+            "experimental.autoMarkPrompts": true,
+            
+            // Add support for a right-click context menu
+            // You can also just bind the `showContextMenu` action
+            "experimental.rightClickContextMenu": true,
+            "environment": {
+                "MY_ENVIRONMENT_VARIABLE": "Hi from defaults!"
+            },
             "font": 
             {
                 "face": "CaskaydiaCove Nerd Font"
@@ -69,7 +82,7 @@
             },
             {
                 "backgroundImage": "ms-appdata:///roaming/Azure.png",
-                "backgroundImageOpacity": 0.30000001192092896,
+                "backgroundImageOpacity": 0.3,
                 "backgroundImageStretchMode": "none",
                 "colorScheme": "Solarized Dark",
                 "guid": "{b453ae62-4e3d-5e58-b989-0a998ec441b8}",
@@ -79,6 +92,7 @@
             },
             {
                 "colorScheme": "Cobalt2",
+                "elevate": false,
                 "guid": "{574e775e-4f2a-5b96-ac1e-a2962a402336}",
                 "hidden": false,
                 "name": "PowerShell",
@@ -92,6 +106,7 @@
                 "name": "Bash"
             },
             {
+                "elevate": false,
                 "guid": "{aab79973-318f-43b6-a9bc-b4096493753f}",
                 "hidden": false,
                 "name": "Nushell",
@@ -114,6 +129,28 @@
                 "hidden": true,
                 "name": "rancher-desktop",
                 "source": "Windows.Terminal.Wsl"
+            },
+            {
+                "guid": "{1bdae7ec-8ca6-5caa-8453-8b6fe78b2748}",
+                "hidden": false,
+                "name": "rancher-desktop-data",
+                "source": "Windows.Terminal.Wsl"
+            },
+            {
+                "guid": "{16208362-94fc-5b1f-a491-5b2624d5ab56}",
+                "hidden": true,
+                "name": "Visual Studio Debug Console",
+                "source": "VSDebugConsole"
+            },
+            {
+                "colorScheme": "Cobalt2",
+                "commandline": "pwsh",
+                "elevate": true,
+                "guid": "{230ffdd3-2470-4e3e-ad47-d726eb792eb3}",
+                "hidden": true,
+                "icon": "ms-appx:///ProfileIcons/pwsh.png",
+                "name": "PowerShell Admin",
+                "startingDirectory": "c:/dev/"
             },
         ]
     },
@@ -396,5 +433,6 @@
             "yellow": "#808000"
         }
     ],
-    "startOnUserLogin": true
+    "startOnUserLogin": true,
+    "themes": []
 }
