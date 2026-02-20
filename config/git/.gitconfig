@@ -31,3 +31,5 @@
 	recurse = true
 [init]
 	defaultBranch = main
+[safe]
+	directory = C:/Users/alexandre.nedelec/dotfiles

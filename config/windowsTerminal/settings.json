@@ -4,16 +4,16 @@
     "actions": 
     [
         {
+            "command": "paste",
+            "keys": "ctrl+v"
+        },
+        {
             "command": 
             {
                 "action": "copy",
                 "singleLine": false
             },
             "keys": "ctrl+c"
-        },
-        {
-            "command": "paste",
-            "keys": "ctrl+v"
         },
         {
             "command": "find",
@@ -26,24 +26,24 @@
         {
             "command": 
             {
+                "action": "openSettings",
+                "target": "settingsUI"
+            },
+            "keys": "ctrl+shift+comma"
+        },
+        {
+            "command": 
+            {
                 "action": "splitPane",
                 "split": "auto",
                 "splitMode": "duplicate"
             },
             "keys": "alt+shift+d"
-        },
-        {
-            "command": 
-            {
-                "action": "openSettings",
-                "target": "settingsUI"
-            },
-            "keys": "ctrl+shift+comma"
         }
     ],
     "copyFormatting": "none",
     "copyOnSelect": true,
-    "defaultProfile": "{574e775e-4f2a-5b96-ac1e-a2962a402336}",
+    "defaultProfile": "{aab79973-318f-43b6-a9bc-b4096493753f}",
     "launchMode": "maximized",
     "profiles": 
     {
@@ -83,20 +83,7 @@
                 "hidden": false,
                 "name": "PowerShell",
                 "source": "Windows.Terminal.PowershellCore",
-                "startingDirectory": "d:/dev/"
-            },
-            {
-                "guid": "{0a0d8adc-ee68-5194-b714-cec1c25823fd}",
-                "hidden": true,
-                "name": "Developer Command Prompt for VS 2022",
-                "source": "Windows.Terminal.VisualStudio"
-            },
-            {
-                "guid": "{05dbdb89-20c2-5350-a1c0-573fc9566cf4}",
-                "hidden": false,
-                "icon": "ms-appdata:///roaming/vs.png",
-                "name": "Developer PowerShell for VS 2022",
-                "source": "Windows.Terminal.VisualStudio"
+                "startingDirectory": "c:/dev/"
             },
             {
                 "commandline": "C:\\Program Files\\Git\\git-bash.exe",
@@ -105,23 +92,29 @@
                 "name": "Bash"
             },
             {
+                "guid": "{aab79973-318f-43b6-a9bc-b4096493753f}",
+                "hidden": false,
+                "name": "Nushell",
+                "source": "nu"
+            },
+            {
+                "guid": "{173927d5-8e9b-5de2-bdf8-0b8aa710a1bb}",
+                "hidden": true,
+                "name": "Developer Command Prompt for VS 2022",
+                "source": "Windows.Terminal.VisualStudio"
+            },
+            {
+                "guid": "{33f3cbb4-0f21-5730-8efe-bd1e2b81e1d3}",
+                "hidden": true,
+                "name": "Developer PowerShell for VS 2022",
+                "source": "Windows.Terminal.VisualStudio"
+            },
+            {
                 "guid": "{1cd79813-5972-56cb-badb-ba5ee12693c5}",
                 "hidden": true,
                 "name": "rancher-desktop",
                 "source": "Windows.Terminal.Wsl"
             },
-            {
-                "guid": "{1bdae7ec-8ca6-5caa-8453-8b6fe78b2748}",
-                "hidden": true,
-                "name": "rancher-desktop-data",
-                "source": "Windows.Terminal.Wsl"
-            },
-            {
-                "guid": "{aab79973-318f-43b6-a9bc-b4096493753f}",
-                "hidden": false,
-                "name": "Nushell",
-                "source": "nu"
-            }
         ]
     },
     "schemes": 
