@@ -7,12 +7,12 @@
 [rebase]
 	autoStash = true
 	autosquash = true
-[diff]
-  tool = vscode
-[difftool "vscode"]
-	cmd = code --wait --diff $LOCAL $REMOTE
-[mergetool "vscode"]
-  cmd = code --wait $MERGED
+# [diff]
+#   tool = vscode
+# [difftool "vscode"]
+# 	cmd = code --wait --diff $LOCAL $REMOTE
+# [mergetool "vscode"]
+#   cmd = code --wait $MERGED
 [core]
 	editor = code --wait
 	autocrlf = true

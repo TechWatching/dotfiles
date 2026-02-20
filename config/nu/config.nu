@@ -890,8 +890,14 @@ $env.config = {
     ]
 
     }
+
+# Custom environment variables
+# $env.DOTNET_ASPIRE_CONTAINER_RUNTIME="podman"
+
 # Custom aliases
 use C:\tools\nu_scripts\aliases\git\git-aliases.nu *
+
+def dcleanup [] { ls **/bin **/obj | each {|it| rm -r $it.name } }
 
 # Custom completions
 use C:\tools\nu_scripts\custom-completions\git\git-completions.nu *
