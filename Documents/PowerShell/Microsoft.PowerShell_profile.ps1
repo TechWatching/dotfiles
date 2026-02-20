@@ -1,4 +1,5 @@
 $env:POSH_GIT_ENABLED = $true
+$env:POSH_UPDATE_NOTICE = $false
 Import-Module posh-git
 oh-my-posh init pwsh --config "$env:USERPROFILE\.config\ohmyposh\.oh-my-posh.omp.json" | Invoke-Expression
 
@@ -148,3 +149,4 @@ $env:CARAPACE_BRIDGES = 'zsh,fish,bash,inshellisense' # optional
 Set-PSReadLineOption -Colors @{ "Selection" = "`e[7m" }
 Set-PSReadlineKeyHandler -Key Tab -Function MenuComplete
 carapace _carapace | Out-String | Invoke-Expression
+mise activate pwsh | Out-String | Invoke-Expression

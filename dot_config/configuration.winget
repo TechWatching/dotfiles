@@ -196,13 +196,8 @@ properties:
         description: Bootstrap dotfiles with chezmoi from GitHub
         allowPrerelease: true
       settings:
-        GetScript: |
-          $env:PATH = [System.Environment]::GetEnvironmentVariable('PATH','Machine') + ';' + [System.Environment]::GetEnvironmentVariable('PATH','User')
-          return @{ Result = (Test-Path "$env:USERPROFILE\.local\share\chezmoi\.git") -and [string]::IsNullOrEmpty((chezmoi diff 2>&1)) }
-        TestScript: |
-          $env:PATH = [System.Environment]::GetEnvironmentVariable('PATH','Machine') + ';' + [System.Environment]::GetEnvironmentVariable('PATH','User')
-          if (!(Test-Path "$env:USERPROFILE\.local\share\chezmoi\.git")) { return $false }
-          return [string]::IsNullOrEmpty((chezmoi diff 2>&1))
+        GetScript: return @{ Result = (Test-Path "$env:USERPROFILE\.local\share\chezmoi\.git") }
+        TestScript: return (Test-Path "$env:USERPROFILE\.local\share\chezmoi\.git")
         SetScript: |
           $env:PATH = [System.Environment]::GetEnvironmentVariable('PATH','Machine') + ';' + [System.Environment]::GetEnvironmentVariable('PATH','User')
           if (Test-Path "$env:USERPROFILE\.local\share\chezmoi\.git") { chezmoi apply }
@@ -270,22 +265,6 @@ properties:
       settings:
         id: jdx.mise
         source: winget
-
-    - resource: PSDscResources/Script
-      dependsOn:
-        - mise
-        - powershell
-      directives:
-        description: Activate mise in PowerShell profile
-        allowPrerelease: true
-      settings:
-        GetScript: return @{ Result = (Select-String -Path "$HOME\Documents\PowerShell\Microsoft.PowerShell_profile.ps1" -Pattern 'mise activate pwsh' -Quiet -ErrorAction SilentlyContinue) }
-        TestScript: return (Select-String -Path "$HOME\Documents\PowerShell\Microsoft.PowerShell_profile.ps1" -Pattern 'mise activate pwsh' -Quiet -ErrorAction SilentlyContinue)
-        SetScript: |
-          $env:PATH = [System.Environment]::GetEnvironmentVariable('PATH','Machine') + ';' + [System.Environment]::GetEnvironmentVariable('PATH','User')
-          $profileDir = Split-Path $HOME\Documents\PowerShell\Microsoft.PowerShell_profile.ps1
-          if (!(Test-Path $profileDir)) { New-Item -ItemType Directory -Path $profileDir -Force }
-          Add-Content -Path "$HOME\Documents\PowerShell\Microsoft.PowerShell_profile.ps1" -Value '(&mise activate pwsh) | Out-String | Invoke-Expression'
 
     - resource: PSDscResources/Script
       dependsOn:
