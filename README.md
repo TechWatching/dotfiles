@@ -14,7 +14,7 @@ Software is installed using 2 different package managers for Windows:
 - [Chocolatey](https://chocolatey.org/)
 - [Windows Package Manager](https://docs.microsoft.com/en-us/windows/package-manager/) aka winget
 
-I have chosen to use mainly winget to install tools, except when packages were only available on Chocolatey on more up-to-date on Chocolatey.
+I have chosen to use mainly winget to install tools, except when packages were only available on Chocolatey or more up-to-date on Chocolatey.
 
 One of the firsts steps of the bootstarter.ps1 script is to install git and clone this repository. It uses it to call the other scripts in the repository and retrieve the settings files.
 
