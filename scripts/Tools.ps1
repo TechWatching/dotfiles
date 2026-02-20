@@ -27,7 +27,6 @@ winget install -e -h --id Dell.DisplayManager
 # Dev tools  ----------------------------------- #
 # ---------------------------------------------- #
 winget install -e -h --id AndreasWascher.RepoZ
-winget install -e -h --id CoreyButler.NVMforWindows
 iwr https://get.pnpm.io/install.ps1 -useb | iex
 # iwr -useb get.scoop.sh | iex
 winget install -e -h --id GitHub.cli
@@ -37,6 +36,11 @@ winget install -e -h --id GitHub.cli
 # ---------------------------------------------- #
 pwsh -Command { Install-Module posh-git -Scope CurrentUser -Force}
 winget install -e -h --id JanDeDobbeleer.OhMyPosh
+
+# ---------------------------------------------- #
+# Terminal completions ------------------------- #
+# ---------------------------------------------- #
+winget install -e --id rsteube.Carapace
 
 # ---------------------------------------------- #
 # PowerShell  ---------------------------------- #
@@ -77,19 +81,8 @@ cp "$env:USERPROFILE\dotfiles\config\windowsTerminal\icons\*" "$env:USERPROFILE\
 # ---------------------------------------------- #
 winget install -e -h --id Microsoft.AzureCLI
 winget install -e -h --id Microsoft.AzureCosmosEmulator
-winget install -e -h --id Microsoft.AzureDataStudio
-winget install -e -h --id Microsoft.azure-iot-explorer
 winget install -e -h --id Microsoft.AzureStorageExplorer
 winget install -e -h --id Pulumi.Pulumi
 winget install -e -h --id Microsoft.AzureFunctionsCoreTools
 # Azurite can be installed through vscode extension or as a global npm package
 # pnpm add -g azurite
-
-
-
-# ---------------------------------------------- #
-# Blog tools  ---------------------------------- #
-# ---------------------------------------------- #
-# wyam
-# netlify
-# statiq
