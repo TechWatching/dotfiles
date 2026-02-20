@@ -25,7 +25,7 @@ $env.config.show_banner = false
 $env.config.buffer_editor = "code"
 
 # Custom theme
-use C:\tools\nu_scripts\themes\nu-themes\cobalt2.nu
+use ($nu.default-config-dir | path join "scripts/themes/cobalt2.nu")
 $env.config = ($env.config | merge {color_config: (cobalt2)})
 
 # Configure prompt
@@ -36,7 +36,7 @@ source ~/.cache/carapace/init.nu
 source ~/.zoxide.nu
 
 # Custom aliases
-use C:\tools\nu_scripts\aliases\git\git-aliases.nu *
+use ($nu.default-config-dir | path join "scripts/aliases/git-aliases.nu") *
 
 def dcleanup [] { ls **/bin **/obj | each {|it| rm -r $it.name } }
 
