@@ -1,5 +1,5 @@
 # yaml-language-server: $schema=https://aka.ms/configuration-dsc-schema/0.2
-# Run with: winget configure -f .config/configuration.winget
+# Run with: winget configure -f .config/configuration-perso.winget
 properties:
   configurationVersion: 0.2.0
   assertions:
@@ -201,7 +201,7 @@ properties:
         SetScript: |
           $env:PATH = [System.Environment]::GetEnvironmentVariable('PATH','Machine') + ';' + [System.Environment]::GetEnvironmentVariable('PATH','User')
           if (Test-Path "$env:USERPROFILE\.local\share\chezmoi\.git") { chezmoi apply }
-          else { chezmoi init --apply TechWatching }
+          else { chezmoi init --promptString "machineType=perso" --apply TechWatching }
 
     - resource: Microsoft.WinGet.DSC/WinGetPackage
       id: github-cli
@@ -219,15 +219,6 @@ properties:
         securityContext: elevated
       settings:
         id: GitHub.Copilot
-        source: winget
-
-    - resource: Microsoft.WinGet.DSC/WinGetPackage
-      id: visual-studio
-      directives:
-        description: Install Visual Studio Enterprise 2026
-        securityContext: elevated
-      settings:
-        id: Microsoft.VisualStudio.Enterprise
         source: winget
 
     - resource: Microsoft.WinGet.DSC/WinGetPackage
@@ -305,15 +296,6 @@ properties:
         source: winget
 
     - resource: Microsoft.WinGet.DSC/WinGetPackage
-      id: azure-cosmos-emulator
-      directives:
-        description: Install Azure Cosmos DB Emulator
-        securityContext: elevated
-      settings:
-        id: Microsoft.Azure.CosmosEmulator
-        source: winget
-
-    - resource: Microsoft.WinGet.DSC/WinGetPackage
       id: azure-storage-explorer
       directives:
         description: Install Azure Storage Explorer
@@ -346,24 +328,6 @@ properties:
     # ---------------------------------------------- #
     # Productivity                                    #
     # ---------------------------------------------- #
-    - resource: Microsoft.WinGet.DSC/WinGetPackage
-      id: whiteboard
-      directives:
-        description: Install Microsoft Whiteboard
-        securityContext: elevated
-      settings:
-        id: 9MSPC6MP8FM4
-        source: msstore
-
-    - resource: Microsoft.WinGet.DSC/WinGetPackage
-      id: bing-wallpaper
-      directives:
-        description: Install Microsoft Bing Wallpaper
-        securityContext: elevated
-      settings:
-        id: Microsoft.BingWallpaper
-        source: winget
-
     - resource: Microsoft.WinGet.DSC/WinGetPackage
       id: logitech-options-plus
       directives:

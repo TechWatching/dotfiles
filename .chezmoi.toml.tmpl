@@ -1,0 +1,2 @@
+{{- $machineType := promptStringOnce . "machineType" "Machine type (pro/perso)" "perso" -}}
+{{ include (printf "machine-%s.toml" $machineType) }}
