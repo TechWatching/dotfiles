@@ -1,3 +1,4 @@
+$env:POSH_GIT_ENABLED = $true
 Import-Module posh-git
 oh-my-posh init pwsh --config "$env:USERPROFILE\dotfiles\config\prompt\.oh-my-posh.omp.json" | Invoke-Expression
 

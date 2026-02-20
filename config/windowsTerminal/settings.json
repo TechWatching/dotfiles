@@ -1,7 +1,6 @@
 {
     "$help": "https://aka.ms/terminal-documentation",
-    "$schema": "https://raw.githubusercontent.com/microsoft/terminal/release-1.18/doc/cascadia/profiles.schema.json",
-    // "$schema": "https://aka.ms/terminal-profiles-schema",
+    "$schema": "https://aka.ms/terminal-profiles-schema",
     "actions": 
     [
         {
@@ -46,22 +45,18 @@
     "copyOnSelect": true,
     "defaultProfile": "{aab79973-318f-43b6-a9bc-b4096493753f}",
     "launchMode": "maximized",
+    "newTabMenu": 
+    [
+        {
+            "type": "remainingProfiles"
+        }
+    ],
     "profiles": 
     {
         "defaults": 
         {
-            // Marks in general
-            "experimental.showMarksOnScrollbar": true,
-            
-            // Needed for both pwsh and CMD shell integration
             "experimental.autoMarkPrompts": true,
-            
-            // Add support for a right-click context menu
-            // You can also just bind the `showContextMenu` action
-            "experimental.rightClickContextMenu": true,
-            "environment": {
-                "MY_ENVIRONMENT_VARIABLE": "Hi from defaults!"
-            },
+            "experimental.showMarksOnScrollbar": true,
             "font": 
             {
                 "face": "CaskaydiaCove Nerd Font"
@@ -97,7 +92,7 @@
                 "hidden": false,
                 "name": "PowerShell",
                 "source": "Windows.Terminal.PowershellCore",
-                "startingDirectory": "c:/dev/"
+                "startingDirectory": "d:/dev/"
             },
             {
                 "commandline": "C:\\Program Files\\Git\\git-bash.exe",
@@ -106,35 +101,12 @@
                 "name": "Bash"
             },
             {
+                "colorScheme": "Cobalt2",
                 "elevate": false,
                 "guid": "{aab79973-318f-43b6-a9bc-b4096493753f}",
                 "hidden": false,
                 "name": "Nushell",
                 "source": "nu"
-            },
-            {
-                "guid": "{173927d5-8e9b-5de2-bdf8-0b8aa710a1bb}",
-                "hidden": true,
-                "name": "Developer Command Prompt for VS 2022",
-                "source": "Windows.Terminal.VisualStudio"
-            },
-            {
-                "guid": "{33f3cbb4-0f21-5730-8efe-bd1e2b81e1d3}",
-                "hidden": true,
-                "name": "Developer PowerShell for VS 2022",
-                "source": "Windows.Terminal.VisualStudio"
-            },
-            {
-                "guid": "{1cd79813-5972-56cb-badb-ba5ee12693c5}",
-                "hidden": true,
-                "name": "rancher-desktop",
-                "source": "Windows.Terminal.Wsl"
-            },
-            {
-                "guid": "{1bdae7ec-8ca6-5caa-8453-8b6fe78b2748}",
-                "hidden": false,
-                "name": "rancher-desktop-data",
-                "source": "Windows.Terminal.Wsl"
             },
             {
                 "guid": "{16208362-94fc-5b1f-a491-5b2624d5ab56}",
@@ -150,8 +122,8 @@
                 "hidden": true,
                 "icon": "ms-appx:///ProfileIcons/pwsh.png",
                 "name": "PowerShell Admin",
-                "startingDirectory": "c:/dev/"
-            },
+                "startingDirectory": "d:/dev/"
+            }
         ]
     },
     "schemes": 
@@ -434,5 +406,49 @@
         }
     ],
     "startOnUserLogin": true,
-    "themes": []
+    "themes": 
+    [
+        {
+            "name": "legacyDark",
+            "tab": 
+            {
+                "background": null,
+                "showCloseButton": "always",
+                "unfocusedBackground": null
+            },
+            "window": 
+            {
+                "applicationTheme": "dark",
+                "useMica": false
+            }
+        },
+        {
+            "name": "legacyLight",
+            "tab": 
+            {
+                "background": null,
+                "showCloseButton": "always",
+                "unfocusedBackground": null
+            },
+            "window": 
+            {
+                "applicationTheme": "light",
+                "useMica": false
+            }
+        },
+        {
+            "name": "legacySystem",
+            "tab": 
+            {
+                "background": null,
+                "showCloseButton": "always",
+                "unfocusedBackground": null
+            },
+            "window": 
+            {
+                "applicationTheme": "system",
+                "useMica": false
+            }
+        }
+    ]
 }

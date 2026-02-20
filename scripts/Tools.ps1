@@ -62,7 +62,7 @@ New-Item -ItemType SymbolicLink -Path "$env:USERPROFILE\AppData\Roaming\nushell\
 # Windows Terminal (stable + preview) install with Cascadia Code PL font
 winget install -e -h --id Microsoft.WindowsTerminal -s msstore
 winget install -e -h --id Microsoft.WindowsTerminalPreview -s msstore
-choco install -y cascadiacodepl
+choco install -y cascadia-code-nerd-font
 # Windows terminal configuration
 Remove-Item -Path "$env:USERPROFILE\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json" -Force
 New-Item -ItemType SymbolicLink -Path "$env:USERPROFILE\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json" -Target "$env:USERPROFILE\dotfiles\config\windowsTerminal\settings.json"
