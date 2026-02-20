@@ -492,3 +492,6 @@ let-env config = {
     }
   ]
 }
+
+# Configure prompt
+source ~/.oh-my-posh.nu

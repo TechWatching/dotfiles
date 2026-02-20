@@ -32,23 +32,28 @@ winget install -e -h --id CoreyButler.NVMforWindows
 
 
 # ---------------------------------------------- #
+# Prompt  -------------------------------------- #
+# ---------------------------------------------- #
+pwsh -Command { Install-Module posh-git -Scope CurrentUser -Force}
+winget install -e -h --id JanDeDobbeleer.OhMyPosh
+
+# ---------------------------------------------- #
 # PowerShell  ---------------------------------- #
 # ---------------------------------------------- #
 winget install -e -h --id Microsoft.PowerShell
 # Set-ExecutionPolicy RemoteSigned -Scope CurrentUser
-Install-Module posh-git -Scope CurrentUser -Force
-Install-Module oh-my-posh -Scope CurrentUser -Force
-Install-Module posh-git
-Install-Module oh-my-posh
+Remove-Item -Path "$env:USERPROFILE\Documents\PowerShell\Microsoft.PowerShell_profile.ps1" -Force
+New-Item -ItemType SymbolicLink -Path "$env:USERPROFILE\Documents\PowerShell\Microsoft.PowerShell_profile.ps1" -Target "$env:USERPROFILE\dotfiles\config\powerShell\Microsoft.PowerShell_profile.ps1"
 
 # ---------------------------------------------- #
 # NuShell  ---------------------------------- #
 # ---------------------------------------------- #
 winget install -e -h --id Nushell.Nushell
+# saves an initialization script to ~/.oh-my-posh.nu that will be used in Nushell config file
+oh-my-posh init nu --config "$env:USERPROFILE\dotfiles\config\prompt\.oh-my-posh.omp.json"
 Remove-Item -Path "$env:USERPROFILE\AppData\Roaming\nushell\config.nu" -Force
 New-Item -ItemType SymbolicLink -Path "$env:USERPROFILE\AppData\Roaming\nushell\config.nu" -Target "$env:USERPROFILE\dotfiles\config\nu\config.nu"
 # config auto complete dotnet / nuke / ...
-# configure prompt with starship or ohmyposh
 
 # ---------------------------------------------- #
 # Windows Terminal ----------------------------- #
@@ -76,7 +81,7 @@ winget install -e -h --id Microsoft.azure-iot-explorer
 winget install -e -h --id Microsoft.AzureStorageExplorer
 winget install -e -h --id Pulumi.Pulumi
 winget install -e -h --id Microsoft.AzureFunctionsCoreTools
-# Azurite will be installed through vsocde extension
+# Azurite will be installed through vscode extension
 
 
 # ---------------------------------------------- #

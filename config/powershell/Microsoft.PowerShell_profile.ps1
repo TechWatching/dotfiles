@@ -1,6 +1,6 @@
 Import-Module posh-git
-Import-Module oh-my-posh
-Set-Theme Paradox
+oh-my-posh init pwsh --config "$env:USERPROFILE\dotfiles\config\prompt\.oh-my-posh.omp.json" | Invoke-Expression
+
 # PowerShell parameter completion shim for the dotnet CLI
 Register-ArgumentCompleter -Native -CommandName dotnet -ScriptBlock {
     param($commandName, $wordToComplete, $cursorPosition)
