@@ -1,0 +1,4 @@
+# Files and directories not managed by chezmoi
+README.md
+LICENSE.md
+vs-configs

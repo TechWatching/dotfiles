@@ -1,5 +1,6 @@
 [user]
 	name = Alexandre Nedelec
+	email = 15186176+TechWatching@users.noreply.github.com
 [fetch]
 	prune = true
 [pull]

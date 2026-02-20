@@ -1,0 +1,462 @@
+# yaml-language-server: $schema=https://aka.ms/configuration-dsc-schema/0.2
+# Run with: winget configure -f .config/configuration.winget
+properties:
+  configurationVersion: 0.2.0
+  assertions:
+    - resource: Microsoft.Windows.Developer/OsVersion
+      directives:
+        description: Verify minimum OS version (Windows 10 1809 or later)
+        allowPrerelease: true
+      settings:
+        MinVersion: "10.0.26100"
+
+  resources:
+    # ---------------------------------------------- #
+    # Developer Mode                                  #
+    # ---------------------------------------------- #
+    - resource: Microsoft.Windows.Settings/WindowsSettings
+      directives:
+        description: Enable Developer Mode
+        allowPrerelease: true
+        securityContext: elevated
+      settings:
+        DeveloperMode: true
+
+    - resource: Microsoft.Windows.Developer/WindowsExplorer
+      directives:
+        description: Configure File Explorer settings
+        allowPrerelease: true
+      settings:
+        FileExtensions: Show
+        HiddenFiles: Show
+
+    - resource: PSDscResources/Registry
+      directives:
+        description: Disable suggested apps in Start menu
+        allowPrerelease: true
+      settings:
+        Key: HKCU:\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager
+        ValueName: SystemPaneSuggestionsEnabled
+        ValueData: "0"
+        ValueType: Dword
+        Ensure: Present
+        Force: true
+
+    # ---------------------------------------------- #
+    # Git                                             #
+    # ---------------------------------------------- #
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: git
+      directives:
+        description: Install Git
+        securityContext: elevated
+      settings:
+        id: Git.Git
+        source: winget
+
+    # ---------------------------------------------- #
+    # PowerShell                                      #
+    # ---------------------------------------------- #
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: powershell
+      directives:
+        description: Install PowerShell 7
+        securityContext: elevated
+      settings:
+        id: Microsoft.PowerShell
+        source: winget
+
+    # ---------------------------------------------- #
+    # .NET SDK                                        #
+    # ---------------------------------------------- #
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: dotnet-sdk
+      directives:
+        description: Install .NET 9 SDK
+        securityContext: elevated
+      settings:
+        id: Microsoft.DotNet.SDK.9
+        source: winget
+
+    # ---------------------------------------------- #
+    # Terminal                                        #
+    # ---------------------------------------------- #
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: windows-terminal
+      directives:
+        description: Install Windows Terminal
+        securityContext: elevated
+      settings:
+        id: Microsoft.WindowsTerminal
+        source: winget
+
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: windows-terminal-preview
+      directives:
+        description: Install Windows Terminal Preview
+        securityContext: elevated
+      settings:
+        id: Microsoft.WindowsTerminal.Preview
+        source: winget
+
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: oh-my-posh
+      directives:
+        description: Install Oh My Posh (terminal prompt)
+        securityContext: elevated
+      settings:
+        id: JanDeDobbeleer.OhMyPosh
+        source: winget
+
+    - resource: PSDscResources/Script
+      dependsOn:
+        - oh-my-posh
+      directives:
+        description: Install CaskaydiaCove Nerd Font via Oh My Posh
+        allowPrerelease: true
+      settings:
+        GetScript: return @{ Result = (Test-Path "$env:LOCALAPPDATA\Microsoft\Windows\Fonts\CaskaydiaCoveNerdFont-Regular.ttf") }
+        TestScript: return (Test-Path "$env:LOCALAPPDATA\Microsoft\Windows\Fonts\CaskaydiaCoveNerdFont-Regular.ttf")
+        SetScript: oh-my-posh font install CascadiaCode
+
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: nushell
+      directives:
+        description: Install Nushell
+        securityContext: elevated
+      settings:
+        id: Nushell.Nushell
+        source: winget
+
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: fzf
+      directives:
+        description: Install fzf (fuzzy finder)
+        securityContext: elevated
+      settings:
+        id: junegunn.fzf
+        source: winget
+
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: zoxide
+      directives:
+        description: Install zoxide (smarter cd)
+        securityContext: elevated
+      settings:
+        id: ajeetdsouza.zoxide
+        source: winget
+
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: carapace
+      directives:
+        description: Install Carapace (shell completions)
+        securityContext: elevated
+      settings:
+        id: rsteube.Carapace
+        source: winget
+
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: pnpm
+      directives:
+        description: Install pnpm (fast Node.js package manager)
+        securityContext: elevated
+      settings:
+        id: pnpm.pnpm
+        source: winget
+
+    - resource: PSDscResources/Script
+      dependsOn:
+        - git
+        - powershell
+      directives:
+        description: Install posh-git PowerShell module
+        allowPrerelease: true
+      settings:
+        GetScript: return @{ Result = (Get-Module posh-git -ListAvailable) -ne $null }
+        TestScript: return (Get-Module posh-git -ListAvailable) -ne $null
+        SetScript: Install-Module posh-git -Scope CurrentUser -Force
+
+    # ---------------------------------------------- #
+    # Dev Tools                                       #
+    # ---------------------------------------------- #
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: chezmoi
+      directives:
+        description: Install chezmoi (dotfiles manager)
+        securityContext: elevated
+      settings:
+        id: twpayne.chezmoi
+        source: winget
+
+    - resource: PSDscResources/Script
+      dependsOn:
+        - chezmoi
+        - git
+      directives:
+        description: Bootstrap dotfiles with chezmoi from GitHub
+        allowPrerelease: true
+      settings:
+        GetScript: |
+          $env:PATH = [System.Environment]::GetEnvironmentVariable('PATH','Machine') + ';' + [System.Environment]::GetEnvironmentVariable('PATH','User')
+          return @{ Result = (Test-Path "$env:USERPROFILE\.local\share\chezmoi\.git") -and [string]::IsNullOrEmpty((chezmoi diff 2>&1)) }
+        TestScript: |
+          $env:PATH = [System.Environment]::GetEnvironmentVariable('PATH','Machine') + ';' + [System.Environment]::GetEnvironmentVariable('PATH','User')
+          if (!(Test-Path "$env:USERPROFILE\.local\share\chezmoi\.git")) { return $false }
+          return [string]::IsNullOrEmpty((chezmoi diff 2>&1))
+        SetScript: |
+          $env:PATH = [System.Environment]::GetEnvironmentVariable('PATH','Machine') + ';' + [System.Environment]::GetEnvironmentVariable('PATH','User')
+          if (Test-Path "$env:USERPROFILE\.local\share\chezmoi\.git") { chezmoi apply }
+          else { chezmoi init --apply TechWatching }
+
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: github-cli
+      directives:
+        description: Install GitHub CLI
+        securityContext: elevated
+      settings:
+        id: GitHub.cli
+        source: winget
+
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: github-copilot
+      directives:
+        description: Install GitHub Copilot CLI
+        securityContext: elevated
+      settings:
+        id: GitHub.Copilot
+        source: winget
+
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: visual-studio
+      directives:
+        description: Install Visual Studio Enterprise 2026
+        securityContext: elevated
+      settings:
+        id: Microsoft.VisualStudio.Enterprise
+        source: winget
+
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: vscode
+      directives:
+        description: Install Visual Studio Code
+        securityContext: elevated
+      settings:
+        id: Microsoft.VisualStudioCode
+        source: winget
+
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: bruno
+      directives:
+        description: Install Bruno (API client)
+        securityContext: elevated
+      settings:
+        id: Bruno.Bruno
+        source: winget
+
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: jetbrains-toolbox
+      directives:
+        description: Install JetBrains Toolbox (for Rider)
+        securityContext: elevated
+      settings:
+        id: JetBrains.Toolbox
+        source: winget
+
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: mise
+      directives:
+        description: Install mise (dev tools version manager)
+        securityContext: elevated
+      settings:
+        id: jdx.mise
+        source: winget
+
+    - resource: PSDscResources/Script
+      dependsOn:
+        - mise
+        - powershell
+      directives:
+        description: Activate mise in PowerShell profile
+        allowPrerelease: true
+      settings:
+        GetScript: return @{ Result = (Select-String -Path "$HOME\Documents\PowerShell\Microsoft.PowerShell_profile.ps1" -Pattern 'mise activate pwsh' -Quiet -ErrorAction SilentlyContinue) }
+        TestScript: return (Select-String -Path "$HOME\Documents\PowerShell\Microsoft.PowerShell_profile.ps1" -Pattern 'mise activate pwsh' -Quiet -ErrorAction SilentlyContinue)
+        SetScript: |
+          $env:PATH = [System.Environment]::GetEnvironmentVariable('PATH','Machine') + ';' + [System.Environment]::GetEnvironmentVariable('PATH','User')
+          $profileDir = Split-Path $HOME\Documents\PowerShell\Microsoft.PowerShell_profile.ps1
+          if (!(Test-Path $profileDir)) { New-Item -ItemType Directory -Path $profileDir -Force }
+          Add-Content -Path "$HOME\Documents\PowerShell\Microsoft.PowerShell_profile.ps1" -Value '(&mise activate pwsh) | Out-String | Invoke-Expression'
+
+    - resource: PSDscResources/Script
+      dependsOn:
+        - mise
+        - nushell
+      directives:
+        description: Activate mise in Nushell profile
+        allowPrerelease: true
+      settings:
+        GetScript: return @{ Result = (Select-String -Path "$env:APPDATA\nushell\config.nu" -Pattern 'mise.nu' -Quiet -ErrorAction SilentlyContinue) }
+        TestScript: return (Select-String -Path "$env:APPDATA\nushell\config.nu" -Pattern 'mise.nu' -Quiet -ErrorAction SilentlyContinue)
+        SetScript: |
+          $env:PATH = [System.Environment]::GetEnvironmentVariable('PATH','Machine') + ';' + [System.Environment]::GetEnvironmentVariable('PATH','User')
+          $misePath = "$env:APPDATA\nushell\mise.nu"
+          $nuConfigPath = "$env:APPDATA\nushell\config.nu"
+          mise activate nu | Set-Content -Path $misePath -Force
+          Add-Content -Path $nuConfigPath -Value "use ($misePath)"
+
+    # ---------------------------------------------- #
+    # Azure Tools                                     #
+    # ---------------------------------------------- #
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: azure-cli
+      directives:
+        description: Install Azure CLI
+        securityContext: elevated
+      settings:
+        id: Microsoft.AzureCLI
+        source: winget
+
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: azure-functions-core-tools
+      directives:
+        description: Install Azure Functions Core Tools
+        securityContext: elevated
+      settings:
+        id: Microsoft.Azure.FunctionsCoreTools
+        source: winget
+
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: azure-cosmos-emulator
+      directives:
+        description: Install Azure Cosmos DB Emulator
+        securityContext: elevated
+      settings:
+        id: Microsoft.Azure.CosmosEmulator
+        source: winget
+
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: azure-storage-explorer
+      directives:
+        description: Install Azure Storage Explorer
+        securityContext: elevated
+      settings:
+        id: Microsoft.Azure.StorageExplorer
+        source: winget
+
+    # ---------------------------------------------- #
+    # Browsers                                        #
+    # ---------------------------------------------- #
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: chrome
+      directives:
+        description: Install Google Chrome
+        securityContext: elevated
+      settings:
+        id: Google.Chrome.EXE
+        source: winget
+
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: firefox
+      directives:
+        description: Install Mozilla Firefox
+        securityContext: elevated
+      settings:
+        id: Mozilla.Firefox
+        source: winget
+
+    # ---------------------------------------------- #
+    # Productivity                                    #
+    # ---------------------------------------------- #
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: whiteboard
+      directives:
+        description: Install Microsoft Whiteboard
+        securityContext: elevated
+      settings:
+        id: 9MSPC6MP8FM4
+        source: msstore
+
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: bing-wallpaper
+      directives:
+        description: Install Microsoft Bing Wallpaper
+        securityContext: elevated
+      settings:
+        id: Microsoft.BingWallpaper
+        source: winget
+
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: logitech-options-plus
+      directives:
+        description: Install Logitech Options+
+        securityContext: elevated
+      settings:
+        id: Logitech.OptionsPlus
+        source: winget
+
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: 7zip
+      directives:
+        description: Install 7-Zip
+        securityContext: elevated
+      settings:
+        id: 7zip.7zip
+        source: winget
+
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: powertoys
+      directives:
+        description: Install Microsoft PowerToys
+        securityContext: elevated
+      settings:
+        id: Microsoft.PowerToys
+        source: winget
+
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: obsidian
+      directives:
+        description: Install Obsidian (notes)
+        securityContext: elevated
+      settings:
+        id: Obsidian.Obsidian
+        source: winget
+
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: windirstat
+      directives:
+        description: Install WinDirStat (disk usage analyzer)
+        securityContext: elevated
+      settings:
+        id: WinDirStat.WinDirStat
+        source: winget
+
+    # ---------------------------------------------- #
+    # WSL2                                            #
+    # ---------------------------------------------- #
+    - resource: PSDscResources/Script
+      directives:
+        description: Enable Windows Subsystem for Linux
+        allowPrerelease: true
+        securityContext: elevated
+      settings:
+        GetScript: return @{ Result = ((Get-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-Linux).State -eq 'Enabled') }
+        TestScript: return (Get-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-Linux).State -eq 'Enabled'
+        SetScript: Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-Linux -NoRestart
+
+    - resource: PSDscResources/Script
+      directives:
+        description: Enable Virtual Machine Platform (required for WSL2)
+        allowPrerelease: true
+        securityContext: elevated
+      settings:
+        GetScript: return @{ Result = ((Get-WindowsOptionalFeature -Online -FeatureName VirtualMachinePlatform).State -eq 'Enabled') }
+        TestScript: return (Get-WindowsOptionalFeature -Online -FeatureName VirtualMachinePlatform).State -eq 'Enabled'
+        SetScript: Enable-WindowsOptionalFeature -Online -FeatureName VirtualMachinePlatform -NoRestart
+
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      directives:
+        description: Install WSL2
+        securityContext: elevated
+      settings:
+        id: Microsoft.WSL
+        source: winget

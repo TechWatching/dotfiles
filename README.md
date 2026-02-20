@@ -2,42 +2,78 @@
 
 Contains everything to setup my developer environment.
 
-> Inpired by [Microsoft/windows-dev-box-setup-scripts](https://github.com/Microsoft/windows-dev-box-setup-scripts) and other repositories using [boxstarter](https://boxstarter.org/) to setup their developer machine.
-
 ## How does this work?
 
-[Boxstarter](https://boxstarter.org/) is used to avoid interruptions during installation and to launch the installation directly from an [URL](https://boxstarter.org/package/nr/url?https://raw.githubusercontent.com/TechWatching/dotfiles/features/initialization/boxstarter.ps1) without manually downloading any software before. 
+[winget configure](https://learn.microsoft.com/en-us/windows/package-manager/winget/configure) installs all tools and applies all settings in one command. [chezmoi](https://www.chezmoi.io/) manages dotfiles across machines, keeping config files in sync via this GitHub repository.
 
-The setup is automated using [PowerShell](https://docs.microsoft.com/en-us/powershell/) scripts.
+**Tools installed:** Git, PowerShell 7, .NET SDK, Windows Terminal, Oh My Posh, Nushell, fzf, zoxide, carapace, mise, chezmoi, GitHub CLI, Visual Studio, VS Code, Bruno, JetBrains Toolbox, Azure CLI, and more.
 
-Software is installed using 2 different package managers for Windows: 
-- [Chocolatey](https://chocolatey.org/)
-- [Windows Package Manager](https://docs.microsoft.com/en-us/windows/package-manager/) aka winget
+**Config files managed:** `.gitconfig`, PowerShell profile, Nushell config, Windows Terminal settings, Oh My Posh theme, winget settings.
 
-I have chosen to use mainly winget to install tools, except when packages were only available on Chocolatey or more up-to-date on Chocolatey.
+## Setting up a new machine
 
-One of the firsts steps of the bootstarter.ps1 script is to install git and clone this repository. It uses it to call the other scripts in the repository and retrieve the settings files.
+Open an elevated PowerShell and run:
 
-Symbolic links are used to make the different settings files on the machine being configured to point to the settings files contained in this git repository. This enables the files to be commited easily when settings are changed.
+```powershell
+$url = "https://raw.githubusercontent.com/TechWatching/dotfiles/main/dot_config/configuration.winget"
+Invoke-WebRequest -Uri $url -OutFile "$env:TEMP\configuration.winget"
+winget configure -f "$env:TEMP\configuration.winget"
+```
 
-## Limitations
+This single command will:
+1. Install all tools and applications via winget
+2. Run `chezmoi init --apply TechWatching` to pull this repo and apply all dotfiles to their correct locations
 
-The script does not currently handle by-passing already installed software or upgrading it (waiting for winget to handle properly these scenarios). If run multiple times, the tools will be re-installed.
+### Step 2 — Apply Visual Studio workloads
 
-This way of doing things works great to setup a development environment on a new machine. Syncing changes between different machines can be more difficult to manage.
+After `winget configure` completes (chezmoi has already run by then), apply the VS workloads:
 
-As this repository is public, there is no current way to keep some files private or use secrets.
+```powershell
+& "C:\Program Files (x86)\Microsoft Visual Studio\Installer\vs_installer.exe" modify `
+  --installPath "C:\Program Files\Microsoft Visual Studio\2026\Enterprise" `
+  --config "$env:USERPROFILE\.local\share\chezmoi\vs-configs\.vsconfig" `
+  --passive --norestart
+```
 
-The tool [chezmoi](https://www.chezmoi.io/#considering-using-chezmoi) might help to solve the 2 last limitations mentionned here.
+## Day-to-day usage
 
+### Sync latest dotfiles from GitHub
+```
+chezmoi update
+```
 
-## Using this repository 
+### Edit a config file
+```
+chezmoi edit ~/.gitconfig
+chezmoi apply
+```
 
-This repository contains the tools I like to use, my config files, my preferences... so you should not use it as-is. You can however take inspiration from it, fork this repository, modify the scripts and settings files with your needs, and use it to set up your development machine. 
+### Push changes to GitHub
+```
+cd ~/.local/share/chezmoi
+git add -A && git commit -m "..." && git push
+```
 
-Only a click on the **Install** link below is needed to kaunch the installation. Please make sure you have updated the link with the corresponding path on your fork.
+## Repository structure
 
-[Install](https://boxstarter.org/package/nr/url?https://raw.githubusercontent.com/TechWatching/dotfiles/features/initialization/boxstarter.ps1)
+```
+dot_config/
+  configuration.winget          # winget DSC config (machine setup)
+  ohmyposh/
+    dot_oh-my-posh.omp.json     # Oh My Posh theme → ~/.config/ohmyposh/
+dot_gitconfig                   # → ~/.gitconfig
+AppData/
+  Roaming/nushell/              # → ~/AppData/Roaming/nushell/
+  Local/Packages/
+    Microsoft.WindowsTerminal*/ # → Windows Terminal settings
+Documents/PowerShell/           # → PowerShell profile
+vs-configs/                     # VS 2019/2022 installer configs (not managed by chezmoi)
+scripts/                        # Legacy setup scripts (not managed by chezmoi)
+```
+
+## Using this repository
+
+This repository contains my personal tools, config files, and preferences — you should not use it as-is. You can fork it, adapt the scripts and settings to your needs, and use it to set up your own development machine.
 
 ## Disclaimer
 
