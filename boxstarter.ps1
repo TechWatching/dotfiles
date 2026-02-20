@@ -1,8 +1,10 @@
+## This command disables User Account Control to run the script without user interaction, it is enabled at the end of the script.
+## To avoid security concerns you can comment it if you prefer, otherwhise please check the software you install is safe and use this command at your own risk.
 Disable-UAC
 $Boxstarter.AutoLogin=$false
 # Install git and clone repository containing scripts and config files
-# TODO: see how to improve install that by using chezmoi (cinst -y chezmoi)
-cinst -y git --params "/GitOnlyOnPath /NoShellIntegration /WindowsTerminal"
+# TODO: see how to improve install that by using chezmoi (choco install -y chezmoi)
+choco install -y git --params "/GitOnlyOnPath /NoShellIntegration /WindowsTerminal"
 RefreshEnv
 git clone https://github.com/TechWatching/dotfiles.git "$env:USERPROFILE\dotfiles"
 # Git configuration
@@ -24,8 +26,8 @@ Set-ItemProperty -Path HKLM:\Software\Microsoft\Windows\CurrentVersion\AppModelU
 . "$env:USERPROFILE\dotfiles\scripts\IDEs.ps1"
 
 # TODO: install WSL2 / Ubuntu
-# cinst -y Microsoft-Windows-Subsystem-Linux -source windowsfeatures
-# cinst -y VirtualMachinePlatform -source windowsfeatures
+# choco install -y Microsoft-Windows-Subsystem-Linux -source windowsfeatures
+# choco install -y VirtualMachinePlatform -source windowsfeatures
 # wsl --set-default-version 2
 # choco install wsl2 --params "/Version:2 /Retry:true"
 

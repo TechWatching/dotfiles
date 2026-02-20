@@ -1,16 +1,16 @@
 # ---------------------------------------------- #
 # Browsers  ------------------------------------ #
 # ---------------------------------------------- #
-cinst -y googlechrome
-cinst -y firefox
+choco install -y googlechrome
+choco install -y firefox
 
 # ---------------------------------------------- #
 # Common tools  --------------------------------- #
 # ---------------------------------------------- #
-cinst -y 7zip
-cinst -y paint.net
-cinst -y screentogif
-cinst -y zoomit
+choco install -y 7zip
+choco install -y paint.net
+choco install -y screentogif
+choco install -y zoomit
 winget install -e -h --id WinDirStat.WinDirStat
 winget install -e -h --id Microsoft.BingWallpaper
 winget install -e -h --id Obsidian.Obsidian
@@ -62,7 +62,7 @@ New-Item -ItemType SymbolicLink -Path "$env:USERPROFILE\AppData\Roaming\nushell\
 # Windows Terminal (stable + preview) install with Cascadia Code PL font
 winget install -e -h --id Microsoft.WindowsTerminal -s msstore
 winget install -e -h --id Microsoft.WindowsTerminalPreview -s msstore
-cinst -y cascadiacodepl
+choco install -y cascadiacodepl
 # Windows terminal configuration
 Remove-Item -Path "$env:USERPROFILE\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json" -Force
 New-Item -ItemType SymbolicLink -Path "$env:USERPROFILE\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json" -Target "$env:USERPROFILE\dotfiles\config\windowsTerminal\settings.json"
@@ -82,7 +82,9 @@ winget install -e -h --id Microsoft.azure-iot-explorer
 winget install -e -h --id Microsoft.AzureStorageExplorer
 winget install -e -h --id Pulumi.Pulumi
 winget install -e -h --id Microsoft.AzureFunctionsCoreTools
-# Azurite will be installed through vscode extension
+# Azurite can be installed through vscode extension or as a global npm package
+# pnpm add -g azurite
+
 
 
 # ---------------------------------------------- #
