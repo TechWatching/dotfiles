@@ -16,7 +16,7 @@ winget install -e -h --id Microsoft.BingWallpaper
 winget install -e -h --id Obsidian.Obsidian
 winget install -e -h --id JohnMacFarlane.Pandoc
 winget install -e -h --id Microsoft.Whiteboard -s msstore
-winget install -e -h --id Microsoft.PowerToys
+winget install -e -h --id Microsoft.PowerToys # settings to sync
 # Already  installed by default
 # winget install -e -h --id Microsoft.Teams
 # winget install -e -h --id Microsoft.Office
@@ -28,6 +28,7 @@ winget install -e -h --id Dell.DisplayManager
 # ---------------------------------------------- #
 winget install -e -h --id AndreasWascher.RepoZ
 winget install -e -h --id CoreyButler.NVMforWindows
+iwr https://get.pnpm.io/install.ps1 -useb | iex
 # iwr -useb get.scoop.sh | iex
 
 
