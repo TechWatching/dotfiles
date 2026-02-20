@@ -200,8 +200,8 @@ properties:
         TestScript: return (Test-Path "$env:USERPROFILE\.local\share\chezmoi\.git")
         SetScript: |
           $env:PATH = [System.Environment]::GetEnvironmentVariable('PATH','Machine') + ';' + [System.Environment]::GetEnvironmentVariable('PATH','User')
-          if (Test-Path "$env:USERPROFILE\.local\share\chezmoi\.git") { chezmoi apply }
-          else { chezmoi init --promptString "machineType=perso" --apply TechWatching }
+          chezmoi init --promptString "machineType=perso" TechWatching
+          chezmoi apply
 
     - resource: Microsoft.WinGet.DSC/WinGetPackage
       id: github-cli
