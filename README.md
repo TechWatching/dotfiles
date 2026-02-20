@@ -1,3 +1,5 @@
+# My personal dot files
+
 Contains everything to setup my developer environment.
 
 > Inpired by [Microsoft/windows-dev-box-setup-scripts](https://github.com/Microsoft/windows-dev-box-setup-scripts) and other repositories using [boxstarter](https://boxstarter.org/) to setup their developer machine.
@@ -37,7 +39,7 @@ Only a click on the **Install** link below is needed to kaunch the installation.
 
 [Install](https://boxstarter.org/package/nr/url?https://raw.githubusercontent.com/TechWatching/dotfiles/features/initialization/boxstarter.ps1)
 
-# Disclaimer
+## Disclaimer
 
 The code in this repository is provided as-is, without any warranties of any kind. Use it at your own risk.
 
