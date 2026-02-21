@@ -8,14 +8,26 @@ Contains everything to setup my developer environment.
 
 **Tools installed:** Git, PowerShell 7, .NET SDK, Windows Terminal, Oh My Posh, Nushell, fzf, zoxide, carapace, mise, chezmoi, GitHub CLI, Visual Studio, VS Code, Bruno, JetBrains Toolbox, Azure CLI, and more.
 
+Two machine profiles are available:
+- `configuration-pro.winget` — work machine (includes Visual Studio Enterprise, Azure tools)
+- `configuration-perso.winget` — personal machine
+
 **Config files managed:** `.gitconfig`, PowerShell profile, Nushell config, Windows Terminal settings, Oh My Posh theme, winget settings.
 
 ## Setting up a new machine
 
-Open an elevated PowerShell and run:
+Open an elevated PowerShell and run one of the following depending on the machine type.
 
+**Work machine:**
 ```powershell
-$url = "https://raw.githubusercontent.com/TechWatching/dotfiles/main/dot_config/configuration.winget"
+$url = "https://raw.githubusercontent.com/TechWatching/dotfiles/main/dot_config/configuration-pro.winget"
+Invoke-WebRequest -Uri $url -OutFile "$env:TEMP\configuration.winget"
+winget configure -f "$env:TEMP\configuration.winget"
+```
+
+**Personal machine:**
+```powershell
+$url = "https://raw.githubusercontent.com/TechWatching/dotfiles/main/dot_config/configuration-perso.winget"
 Invoke-WebRequest -Uri $url -OutFile "$env:TEMP\configuration.winget"
 winget configure -f "$env:TEMP\configuration.winget"
 ```
@@ -58,7 +70,8 @@ git add -A && git commit -m "..." && git push
 
 ```
 dot_config/
-  configuration.winget          # winget DSC config (machine setup)
+  configuration-pro.winget      # winget DSC config for work machine
+  configuration-perso.winget    # winget DSC config for personal machine
   ohmyposh/
     dot_oh-my-posh.omp.json     # Oh My Posh theme → ~/.config/ohmyposh/
 dot_gitconfig                   # → ~/.gitconfig
