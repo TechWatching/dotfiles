@@ -109,6 +109,7 @@ properties:
         source: winget
 
     - resource: PSDscResources/Script
+      id: install-cascadiacove-font
       dependsOn:
         - oh-my-posh
       directives:
@@ -165,6 +166,7 @@ properties:
         source: winget
 
     - resource: PSDscResources/Script
+      id: install-posh-git
       dependsOn:
         - git
         - powershell
@@ -189,6 +191,7 @@ properties:
         source: winget
 
     - resource: PSDscResources/Script
+      id: bootstrap-dotfiles
       dependsOn:
         - chezmoi
         - git
@@ -258,6 +261,22 @@ properties:
         source: winget
 
     - resource: PSDscResources/Script
+      id: generate-ohmyposh-nushell
+      dependsOn:
+        - oh-my-posh
+        - nushell
+      directives:
+        description: Generate Oh My Posh Nushell init file
+        allowPrerelease: true
+      settings:
+        GetScript: return @{ Result = (Test-Path "$env:USERPROFILE\.oh-my-posh.nu") }
+        TestScript: return (Test-Path "$env:USERPROFILE\.oh-my-posh.nu")
+        SetScript: |
+          $env:PATH = [System.Environment]::GetEnvironmentVariable('PATH','Machine') + ';' + [System.Environment]::GetEnvironmentVariable('PATH','User')
+          oh-my-posh init nu --print | Set-Content -Path "$env:USERPROFILE\.oh-my-posh.nu" -Force
+
+    - resource: PSDscResources/Script
+      id: activate-mise-nushell
       dependsOn:
         - mise
         - nushell
@@ -376,30 +395,32 @@ properties:
     # ---------------------------------------------- #
     # WSL2                                            #
     # ---------------------------------------------- #
-    - resource: PSDscResources/Script
-      directives:
-        description: Enable Windows Subsystem for Linux
-        allowPrerelease: true
-        securityContext: elevated
-      settings:
-        GetScript: return @{ Result = ((Get-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-Linux).State -eq 'Enabled') }
-        TestScript: return (Get-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-Linux).State -eq 'Enabled'
-        SetScript: Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-Linux -NoRestart
+    # - resource: PSDscResources/Script
+    #   id: enable-wsl
+    #   directives:
+    #     description: Enable Windows Subsystem for Linux
+    #     allowPrerelease: true
+    #     securityContext: elevated
+    #   settings:
+    #     GetScript: return @{ Result = ((Get-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-Linux).State -eq 'Enabled') }
+    #     TestScript: return (Get-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-Linux).State -eq 'Enabled'
+    #     SetScript: Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-Linux -NoRestart
 
-    - resource: PSDscResources/Script
-      directives:
-        description: Enable Virtual Machine Platform (required for WSL2)
-        allowPrerelease: true
-        securityContext: elevated
-      settings:
-        GetScript: return @{ Result = ((Get-WindowsOptionalFeature -Online -FeatureName VirtualMachinePlatform).State -eq 'Enabled') }
-        TestScript: return (Get-WindowsOptionalFeature -Online -FeatureName VirtualMachinePlatform).State -eq 'Enabled'
-        SetScript: Enable-WindowsOptionalFeature -Online -FeatureName VirtualMachinePlatform -NoRestart
+    # - resource: PSDscResources/Script
+    #   id: enable-virtual-machine-platform
+    #   directives:
+    #     description: Enable Virtual Machine Platform (required for WSL2)
+    #     allowPrerelease: true
+    #     securityContext: elevated
+    #   settings:
+    #     GetScript: return @{ Result = ((Get-WindowsOptionalFeature -Online -FeatureName VirtualMachinePlatform).State -eq 'Enabled') }
+    #     TestScript: return (Get-WindowsOptionalFeature -Online -FeatureName VirtualMachinePlatform).State -eq 'Enabled'
+    #     SetScript: Enable-WindowsOptionalFeature -Online -FeatureName VirtualMachinePlatform -NoRestart
 
-    - resource: Microsoft.WinGet.DSC/WinGetPackage
-      directives:
-        description: Install WSL2
-        securityContext: elevated
-      settings:
-        id: Microsoft.WSL
-        source: winget
+    # - resource: Microsoft.WinGet.DSC/WinGetPackage
+    #   directives:
+    #     description: Install WSL2
+    #     securityContext: elevated
+    #   settings:
+    #     id: Microsoft.WSL
+    #     source: winget
