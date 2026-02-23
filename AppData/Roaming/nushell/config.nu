@@ -45,5 +45,7 @@ def gha [...args] {
 # Custom environment variables
 # $env.DOTNET_ASPIRE_CONTAINER_RUNTIME="podman"
 
+use ($nu.default-config-dir | path join "mise.nu")
+
 # Oh My Posh prompt (must be last)
 oh-my-posh init nu --config ~/.config/ohmyposh/.oh-my-posh.omp.json

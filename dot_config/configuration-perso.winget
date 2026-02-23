@@ -276,7 +276,7 @@ properties:
           $misePath = "$env:APPDATA\nushell\mise.nu"
           $nuConfigPath = "$env:APPDATA\nushell\config.nu"
           mise activate nu | Set-Content -Path $misePath -Force
-          Add-Content -Path $nuConfigPath -Value "use ($misePath)"
+          Add-Content -Path $nuConfigPath -Value "`nuse (`$nu.default-config-dir | path join `"mise.nu`")"
 
     # ---------------------------------------------- #
     # Azure Tools                                     #
