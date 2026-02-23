@@ -28,9 +28,6 @@ $env.config.buffer_editor = "code"
 use ($nu.default-config-dir | path join "scripts/themes/cobalt2.nu")
 $env.config = ($env.config | merge {color_config: (cobalt2)})
 
-# Configure prompt
-source ~/.oh-my-posh.nu
-
 # Completions
 source ~/.cache/carapace/init.nu
 source ~/.zoxide.nu
@@ -47,3 +44,6 @@ def gha [...args] {
 
 # Custom environment variables
 # $env.DOTNET_ASPIRE_CONTAINER_RUNTIME="podman"
+
+# Oh My Posh prompt (must be last)
+oh-my-posh init nu --config ~/.config/ohmyposh/.oh-my-posh.omp.json

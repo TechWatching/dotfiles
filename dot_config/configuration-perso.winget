@@ -261,21 +261,6 @@ properties:
         source: winget
 
     - resource: PSDscResources/Script
-      id: generate-ohmyposh-nushell
-      dependsOn:
-        - oh-my-posh
-        - nushell
-      directives:
-        description: Generate Oh My Posh Nushell init file
-        allowPrerelease: true
-      settings:
-        GetScript: return @{ Result = (Test-Path "$env:USERPROFILE\.oh-my-posh.nu") }
-        TestScript: return (Test-Path "$env:USERPROFILE\.oh-my-posh.nu")
-        SetScript: |
-          $env:PATH = [System.Environment]::GetEnvironmentVariable('PATH','Machine') + ';' + [System.Environment]::GetEnvironmentVariable('PATH','User')
-          oh-my-posh init nu --print | Set-Content -Path "$env:USERPROFILE\.oh-my-posh.nu" -Force
-
-    - resource: PSDscResources/Script
       id: activate-mise-nushell
       dependsOn:
         - mise
@@ -390,6 +375,15 @@ properties:
         securityContext: elevated
       settings:
         id: WinDirStat.WinDirStat
+        source: winget
+
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: dell-display-and-peripheral-manager
+      directives:
+        description: Install Dell Display and Peripheral Manager
+        securityContext: elevated
+      settings:
+        id: Dell.DisplayAndPeripheralManager
         source: winget
 
     # ---------------------------------------------- #
